@@ -1,12 +1,65 @@
-{% extends "core.html" %}
 {% load static %}
-{% block title %}Homepage{% endblock %}
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}" />
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frayed Studio</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/index.css' %}" />
 
-{% block content %}
+  <!-- JS -->
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link 
+  href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" 
+  rel="stylesheet"
+  >
+
+  <!-- Preload fonts/images -->
+  <link rel="preload" href="{% static 'images/landingImage0.PNG' %}" as="image" type="image/png">
+  <link rel="preload" href="{% static 'images/landingImage1.PNG' %}" as="image" type="image/png">
+  <link rel="preload" href="{% static 'images/landingImage2.PNG' %}" as="image" type="image/png">
+</head>
+<body>
+<div class="debugPixelSize">
+    <p id="debugPixelText1"></p>-<p id="debugPixelText2"></p>
+</div>
+
     <div class="landing-image-grid">
+        <!-- FIRST IMAGE -->
+        <img src="{% static 'images/landingImage0.PNG' %}" alt="landing image" />
 
+        <!-- SECOND IMAGE -->
+        <div class="landing-image-middle">
+            <img src="{% static 'images/landingImage1.PNG' %}" alt="landing image" />
+            <figcaption class="landing-image-text">
+                <div class="landing-image-h1">Text</div>
+                <a href="{% url '' %}" class="landing-image-btn">Shop</a>
+            </figcaption>
+        </div>
+
+        <!-- THIRD IMAGE -->
+        <img src="{% static 'images/landingImage2.PNG' %}" alt="landing image" />
     </div>
-{% endblock %}
+
+<script>
+  // DEBUG ONLY
+    // Wait until DOM is ready so elements exist
+    document.addEventListener('DOMContentLoaded', function () {
+      const Pixel1 = document.getElementById("debugPixelText1");
+      const Pixel2 = document.getElementById("debugPixelText2");
+
+      function updatePixelText() {
+        Pixel1.textContent = window.innerWidth;
+        Pixel2.textContent = window.innerHeight;
+
+        requestAnimationFrame(updatePixelText);
+      }
+      updatePixelText();
+    });
+</script>
+</body>
+</html>
