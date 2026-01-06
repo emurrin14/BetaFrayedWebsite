@@ -1,0 +1,133 @@
+
+{% load static %}
+{% block content %}
+<div class="footerContainer">
+  <div class="footerTop">
+    <a class="slideUnderline" href="#" class="footerLink">Shop</a>
+    <a class="slideUnderline" href="#" class="footerLink">About Us</a>
+    <a class="slideUnderline" href="#" class="footerLink">Contact</a>
+    <a class="slideUnderline" href="#" class="footerLink">Terms of Service</a>
+    <a class="slideUnderline" href="#" class="footerLink">Privacy Policy</a>
+  </div>
+
+
+  <div class="footerMiddle">
+
+      <div class="footer0">
+        <div> <!-- placeholder for css -->
+          <img
+          class="footerLogo"
+          src="{% static 'images/logowhite.png' %}"
+          alt="Frayed Logo"
+          />
+
+          <div class="footerSocials">
+            <a href="#" class="footerSocialIcon">
+             <img src="{% static 'images/tiktok.svg' %}" alt="TikTok">
+            </a>
+            <a href="#" class="footerSocialIcon">
+              <img src="{% static 'images/instagram.svg' %}" alt="Instagram">
+            </a>
+            <a href="#" class="footerSocialIcon">
+              <img src="{% static 'images/discord.svg' %}" alt="Discord">
+            </a>
+          </div>
+        </div> <!-- placeholder for css -->
+
+        <div> <!-- placeholder for css -->
+          <form method="post">
+            <input
+            class="inputEmail"
+            name="email"
+            id="email"
+            type="email"
+            placeholder="Email"
+            required
+            />
+            <input class="inputSubscribe" type="submit" value="Subscribe" />
+          </form>
+        </div> <!-- placeholder for css -->
+
+      </div>
+
+    <div class="footer1">
+      <h1 class="footer1Header">Information</h1>
+      
+      <a href="#">Type</a>
+      <a href="#">Events</a>
+      <a href="#">Size Guide</a>
+    </div>
+
+    <div class="footer2">
+      <h1 class="footer2Header">Support</h1>
+
+      <a href="#">Returns</a>
+      <a href="#">Track Orders</a>
+      <a href="#">Our Story</a>
+      <a href="#">Contact Us</a>
+    </div>
+
+  </div>
+  <!-- bottom section -->
+  <div class="footerBottom">
+    <div class="footerBottomLeft">
+      <p>&copy; 2023 Frayed. All rights reserved.</p>
+    </div>
+    <div class="footerBottomRight">
+      <p>Payment Options here</p>
+    </div>
+  </div>
+
+  <!-- mobile only accordian section
+    socials
+    information, type, events, size guide
+    support, returns, track orders, our story, contact us
+  -->
+  <div class="footerAccordian">
+    <div class="accordianSocials">
+      <a href="https://www.tiktok.com/@frayed.studio">
+        <img src="{% static 'images/tiktok.svg' %}" alt="TikTok">
+      </a>
+      <a href="https://www.instagram.com/frayedstore/">
+        <img src="{% static 'images/instagram.svg' %}" alt="Instagram">
+      </a>
+      <a href="https://discord.gg/2eW4GfTkxy">
+        <img src="{% static 'images/discord.svg' %}" alt="Discord">
+      </a>
+    </div>
+  
+    <!-- INFORMATION -->
+    <div class="accordianMenu">
+      <div class="accordianHeader">
+        <div class="accordianPlaceholder"></div>
+        <h1>Information</h1>
+        <img src="{% static 'images/downArrow.svg' %}" alt="information" class="accordianIcon">
+      </div>
+  
+      <div class="accordianContent">
+        <a href="#">Type</a>
+        <a href="#">Events</a>
+        <a href="#">Size Guide</a>
+      </div>
+    </div>
+  
+    <!-- SUPPORT -->
+    <div class="accordianMenu">
+      <div class="accordianHeader">
+        <div class="accordianPlaceholder"></div>
+        <h1>Support</h1>
+        <img src="{% static 'images/downArrow.svg' %}" alt="information" class="accordianIcon">
+      </div>
+  
+      <div class="accordianContent">
+        <a href="#">Returns</a>
+        <a href="#">Track Orders</a>
+        <a href="#">Our Story</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </div>
+  </div>
+  
+
+</div>
+{% endblock %}
