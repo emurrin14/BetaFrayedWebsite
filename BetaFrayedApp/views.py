@@ -20,6 +20,17 @@ def Index(request):
 
 
 
+def Shop_view(request):
+    new_products = Product.objects.filter(tags__name__iexact="New").distinct()
+    denim_products = Product.objects.filter(tags__name__iexact="Denim").distinct()
+    context = {
+        'new_products': new_products,
+        'denim_products': denim_products,
+    }
+    return render(request, 'shop.html', context)
+
+
+
 def Product_View(request, slug):
    product = get_object_or_404(
         Product.objects.prefetch_related('images', 'variants__size', 'variants__color'), 

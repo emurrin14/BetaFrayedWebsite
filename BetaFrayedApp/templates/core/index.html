@@ -24,26 +24,40 @@
   <link rel="preload" href="{% static 'images/landingImage2.PNG' %}" as="image" type="image/png">
 </head>
 <body>
+
 <div class="debugPixelSize">
     <p id="debugPixelText1"></p>-<p id="debugPixelText2"></p>
 </div>
 
-    <div class="landing-image-grid">
-        <!-- FIRST IMAGE -->
-        <img src="{% static 'images/landingImage0.PNG' %}" alt="landing image" />
 
-        <!-- SECOND IMAGE -->
-        <div class="landing-image-middle">
-            <img src="{% static 'images/landingImage1.PNG' %}" alt="landing image" />
-            <figcaption class="landing-image-text">
-                <div class="landing-image-h1">Text</div>
-                <a href="{% url '' %}" class="landing-image-btn">Shop</a>
-            </figcaption>
-        </div>
+  {% comment %} <div class="landing-image-grid">
+      <!-- FIRST IMAGE -->
+      <img src="{% static 'images/landingImage0.PNG' %}" alt="landing image" />
+      
+      <!-- SECOND IMAGE -->
+      <div class="landing-image-middle">
+          <img src="{% static 'images/landingImage1.PNG' %}" alt="landing image" />
+          <figcaption class="landing-image-text">
+              <div class="landing-image-h1">Text</div>
+              <a href="{% url 'index' %}" class="landing-image-btn">Shop</a>
+          </figcaption>
+      </div>
+      
+      <!-- THIRD IMAGE -->
+      <img src="{% static 'images/landingImage2.PNG' %}" alt="landing image" />
+  </div> {% endcomment %}
+  
+  <div class="landing-image-grid">
+    <!-- FIRST IMAGE -->
+    <div class="landing-image-1"></div>
+    
+    <!-- SECOND IMAGE -->
+    <div class="landing-image-middle"></div>
+    
+    <!-- THIRD IMAGE -->
+    <div class="landing-image-3"></div>
+  </div>
 
-        <!-- THIRD IMAGE -->
-        <img src="{% static 'images/landingImage2.PNG' %}" alt="landing image" />
-    </div>
 
 <script>
   // DEBUG ONLY

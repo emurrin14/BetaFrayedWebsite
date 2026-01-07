@@ -1,0 +1,19 @@
+{% extends "core.html" %}
+{% load static %}
+{% block title %}Shop{% endblock title %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/shop/css' %}" />
+{% endblock extra_head %}
+{% block content %}
+<div class="product-grid">
+    
+{% if new_products %}
+    {% for product in new_products %}
+        <a href="{% url 'product' product.slug %}">{{ product.name }}</a>
+    {% endfor %}
+{% else %}
+<h1>nothing</h1>
+{% endif %}
+
+</div>
+{% endblock %}
