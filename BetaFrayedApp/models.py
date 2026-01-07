@@ -1,4 +1,10 @@
 from django.db import models
+from taggit.managers import TaggableManager
+from django.utils.text import slugify
+from django.utils.timezone import now
+from django.utils import timezone
+from django.conf import settings
+
 
 # Create your models here.
 class Product(models.Model):
