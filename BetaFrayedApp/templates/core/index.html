@@ -49,14 +49,28 @@
   
   <div class="landing-image-grid">
     <!-- FIRST IMAGE -->
-    <div class="landing-image-1"></div>
+    <div class="landing-image-1 landing-item">
+      <img src="{% static 'images/landingImage0.PNG' %}" alt="Landing Image">
+    </div>
     
     <!-- SECOND IMAGE -->
-    <div class="landing-image-middle"></div>
+    <div class="landing-image-middle landing-item">
+      <img src="{% static 'images/landingImage1.PNG' %}" alt="Landing Image">
+    </div>
     
     <!-- THIRD IMAGE -->
-    <div class="landing-image-3"></div>
+    <div class="landing-image-3 landing-item">
+      <img src="{% static 'images/landingImage2.PNG' %}" alt="Landing Image">
+    </div>
+
+      <!-- GRID OVERLAY -->
+  <div class="landing-grid-overlay">
+    <div class="overlay-content">
+      <h1>The Black Cords</h1>
+      <a href="{% url 'product' 'southpole-pants' %}">Shop Now</a>
+    </div>
   </div>
+</div>
 
 
 <script>

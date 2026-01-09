@@ -19,16 +19,25 @@
     <div class="imageGridContainerMobile">
       {% for image in product.images.all %}
       <div class="mobileImageContainer">
+        <!-- FIX PADDING BELOW IMAGES -->
         <img src="{{ image.image.url }}" alt="{{ product.title }}">
       </div>
       {% endfor %}
     </div>
-  
+
+    <!-- MOBILE IMAGE PREVIEWS -->
+    <div class="previewGridContainer">
+      {% for image in product.images.all %}
+      <div class="previewImageContainer">
+        <img src="{{ image.image.url }}" alt="{{ product.title }}">
+      </div>
+      {% endfor %}
+    </div>
     
     <div class="detailsContainer">
-      <div class="productTags">
+      <div class="productTagsContainer">
         {% for tag in product.tags.all %}
-          <p>{{ tag.name }}</p>
+          <p class="productTag">{{ tag.name }}</p>
         {% endfor %}
       </div>
       <p>Bottom</p>
