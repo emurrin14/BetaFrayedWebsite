@@ -34,10 +34,6 @@
   display: none;
   flex-direction: row;
   width: auto;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
 }
 
 .mobileImageContainer {
@@ -73,6 +69,14 @@
   height: 100%;
   object-fit: cover;
 }
+.thumbnail{
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.thumbnail-active{
+  opacity: 1;
+  border-color: black;
+}
 
 
 .detailsContainer{
@@ -85,7 +89,7 @@
   transform: translateY(1rem);
   position: sticky;
   top: calc(80px - 1rem);
-  padding-bottom: 2rem;
+  padding: 2rem 2rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -109,8 +113,8 @@
 }
 .productTag{
   background-color: #ccc;
-  padding: 2px;
   border-radius: 4px;
+  padding: .2rem .4rem !important;
 }
 
 

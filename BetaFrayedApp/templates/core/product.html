@@ -15,32 +15,56 @@
       {% endfor %}
     </div>
   
+
     <!--MOBILE IMAGE GRID-->
     <div class="imageGridContainerMobile">
-      {% for image in product.images.all %}
       <div class="mobileImageContainer">
         <!-- FIX PADDING BELOW IMAGES -->
-        <img src="{{ image.image.url }}" alt="{{ product.title }}">
+        {% if product.image0 %}
+        <img
+          src="{{ product.image0.url }}"
+          alt="{{ product.title }}"
+          id="heroImage"
+        >
+        {% endif %}
       </div>
-      {% endfor %}
     </div>
-
     <!-- MOBILE IMAGE PREVIEWS -->
     <div class="previewGridContainer">
       {% for image in product.images.all %}
       <div class="previewImageContainer">
-        <img src="{{ image.image.url }}" alt="{{ product.title }}">
+        <img
+          src="{{ image.image.url }}"
+          alt="{{ product.title }}"
+          class="thumbnail {% if forloop.first %}thumbnail-active{% endif %}"
+        >
       </div>
       {% endfor %}
     </div>
     
+
     <div class="detailsContainer">
       <div class="productTagsContainer">
         {% for tag in product.tags.all %}
           <p class="productTag">{{ tag.name }}</p>
         {% endfor %}
       </div>
+
+      <div class="details">
+        <h1>{{ product.name }}</h1>
+        <h1>{{ product.price_display }}</h1>
+        <div class="productVariantsContainer">
+          {% for variant in product.variants.all %}
+            <img src="{%  %}" alt="">
+          {% endfor %}
+        </div>
+      </div>
+
       <p>Bottom</p>
     </div>
   </div>
 {% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/product.js' %}"></script>
+{% endblock scripts %}
