@@ -53,10 +53,17 @@
       <div class="details">
         <h1>{{ product.name }}</h1>
         <h1>{{ product.price_display }}</h1>
+        <!-- COLOR VARIANTS -->
         <div class="productVariantsContainer">
-          {% for variant in product.variants.all %}
-            <img src="" alt="">
+          {% for color in product.get_unique_colors %}
+            <img 
+              class="variantImage" 
+              src="{{ color.image.url }}" 
+              alt="{{ color.name }}"
+            />
           {% endfor %}
+        </div>
+        <div class="productSizesContainer">
         </div>
       </div>
 

@@ -6,7 +6,9 @@ from django.utils import timezone
 from django.conf import settings
 
 
-# Create your models here.
+
+
+# MAIN PRODUCT MODEN
 class Product(models.Model):
   name = models.CharField(max_length=50)
   slug = models.SlugField(unique=True, blank=True)
@@ -39,6 +41,12 @@ class Product(models.Model):
   def __str__(self):
       return self.name
 
+  def get_unique_colors(self):
+      return Color.objects.filter(
+          product_variant__product=self, 
+          image__isnull=False
+      ).exclude(image="").distinct()
+
 
 
 class ProductImage(models.Model):
@@ -56,18 +64,28 @@ class ProductImage(models.Model):
   class Meta:
      """ Defines default ordering for image queries. """
      ordering = ['order']
-
-
-
-class Size(models.Model):
-  name = models.CharField(max_length=10)
-  def __str__(self):
-    return self.name
   
 
 
 class Color(models.Model):
   name = models.CharField(max_length=10)
+  image = models.ImageField(
+    upload_to="colors/",
+    null=True,
+    blank=True
+  )
+
+  def __str__(self):
+    return self.name
+
+
+class Size(models.Model):
+  name = models.CharField(max_length=20)
+  sort_order = models.PositiveIntegerField(default=0)
+
+  class Meta:
+    ordering = ['sort_order']
+
   def __str__(self):
     return self.name
 
@@ -75,11 +93,18 @@ class Color(models.Model):
 
 class Product_Variant(models.Model):
   product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants')
-  size = models.ForeignKey(Size, on_delete=models.SET_NULL, null=True, blank=True)
   color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
+  size = models.ForeignKey(Size, on_delete=models.SET_NULL, null=True, blank=True)
   stock = models.PositiveIntegerField(default=0)
-  image = models.ImageField (upload_to="products/", null=True, blank=True)
   order = models.PositiveIntegerField(default=0, help_text="Set display order, 0 is primary image")
+
+  class Meta:
+        # ensures you cannot create two separate
+        # records for "Product A - Red - Small"
+        unique_together = ('product', 'color', 'size')
+
+  def __str__(self):
+    return f"{self.product.name} - {self.color} - {self.size}"
 
 
 

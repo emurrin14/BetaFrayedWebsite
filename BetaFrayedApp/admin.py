@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Product, ProductImage, Size, Color, Product_Variant
+from .models import Product, ProductImage, Color, Product_Variant, Size
 from django.utils.html import format_html
 
 # Register your models here.
-# Inline for Product Images to add/edit images directly in Product admin
+
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
@@ -17,13 +17,11 @@ class ProductImageInline(admin.TabularInline):
         return ""
     image_preview.short_description = "Preview"
 
-# Inline for Product Variants
 class ProductVariantInline(admin.TabularInline):
     model = Product_Variant
     extra = 1
-    autocomplete_fields = ['size', 'color']
+    autocomplete_fields = ['color', 'size'] 
 
-# Product admin
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'sku', 'price', 'stock', 'isinstock', 'created_at', 'updated_at')
@@ -32,25 +30,25 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('isinstock', 'tags')
     inlines = [ProductImageInline, ProductVariantInline]
 
-# Register other models
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'sort_order')
+    list_editable = ('sort_order',)
     search_fields = ('name',)
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'image')
     search_fields = ('name',)
 
 @admin.register(Product_Variant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ('product', 'size', 'color', 'stock', 'image')
-    list_filter = ('size', 'color', 'product')
-    search_fields = ('product__name',)
+    list_display = ('product', 'color', 'size', 'stock')
+    list_filter = ('color', 'size', 'product') # Added filter by size
+    search_fields = ('product__name', 'sku')
+    autocomplete_fields = ['product', 'color', 'size']
 
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
     list_display = ('product', 'order', 'image')
     list_filter = ('product',)
-

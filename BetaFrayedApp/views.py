@@ -4,7 +4,7 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadReque
 from django.views.decorators.csrf import csrf_exempt
 import stripe
 from django.utils.timezone import localtime
-from .models import Product, Product_Variant, Cart, CartItem, Size
+from .models import Product, Product_Variant, Cart, CartItem
 import json
 from django.views.decorators.http import require_POST
 from django.urls import reverse
@@ -33,7 +33,7 @@ def Shop_view(request):
 
 def Product_View(request, slug):
    product = get_object_or_404(
-        Product.objects.prefetch_related('images', 'variants__size', 'variants__color'), 
+        Product.objects.prefetch_related('images', 'variants__color'), 
         slug=slug
    )
    context = {
