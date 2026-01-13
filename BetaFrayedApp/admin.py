@@ -45,7 +45,7 @@ class ColorAdmin(admin.ModelAdmin):
 
 @admin.register(Product_Variant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ('product', 'size', 'color', 'stock')
+    list_display = ('product', 'size', 'color', 'stock', 'image')
     list_filter = ('size', 'color', 'product')
     search_fields = ('product__name',)
 

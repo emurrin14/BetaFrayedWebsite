@@ -78,6 +78,8 @@ class Product_Variant(models.Model):
   size = models.ForeignKey(Size, on_delete=models.SET_NULL, null=True, blank=True)
   color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
   stock = models.PositiveIntegerField(default=0)
+  image = models.ImageField (upload_to="products/", null=True, blank=True)
+  order = models.PositiveIntegerField(default=0, help_text="Set display order, 0 is primary image")
 
 
 
