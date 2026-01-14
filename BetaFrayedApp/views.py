@@ -43,6 +43,19 @@ def Product_View(request, slug):
 
 
 
+def cart_view(request):
+    cart = get_cart(request)
+    items = cart.items.all()
+    total = cart.total_price()
+
+    context = {
+        "cart": cart,
+        "items":items,
+        "total":total,
+    }
+
+
+
 def get_cart(request):
     if request.user.is_authenticated:
         cart, created = Cart.objects.get_or_create(user=request.user)
