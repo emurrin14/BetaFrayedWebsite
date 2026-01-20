@@ -53,6 +53,7 @@ def cart_view(request):
         "items":items,
         "total":total,
     }
+    return render(request, "cart.html", context)
 
 
 

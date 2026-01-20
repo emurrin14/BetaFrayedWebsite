@@ -1,9 +1,19 @@
 {% extends "core.html" %}
 {% load static %}
-{% block title %}Index{% endblock title %}
+
+<!-- TITLE FALLBACK -->
+{% block title %}
+  {% if product %}
+      {{ product.name }}
+  {% else %}
+      Product
+  {% endif %}
+{% endblock title %}
+
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'css/product.css' %}" />
 {% endblock extra_head %}
+
 {% block content %}
 <div class="gridContainer">
     <!--IMAGE GRID-->
@@ -53,9 +63,58 @@
       <div class="details">
         <h1>{{ product.name }}</h1>
         <h1>{{ product.price_display }}</h1>
+          <script id="variant-data" type="application/json">
+            [
+                {% for variant in product.variants.all %}
+                {
+                    "id": "{{ variant.id }}",
+                    "color": "{{ variant.color }}",
+                    "size": "{{ variant.size }}",
+                    "stock": {{ variant.stock_quantity|default:1 }} 
+                }{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            ]
+          </script>
 
+          <form id="addToCartForm" data-product-id="{{ product.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="variant_id" id="selectedVariantId" value="">
+            <input type="hidden" name="quantity" value="1">
+
+            <p class="label">Select Color: <span id="colorLabel" style="font-weight:bold;"></span></p>
+            <div class="productVariantsContainer">
+                {% for color in product.get_unique_colors %}
+                <img 
+                    class="variantImage color-option" 
+                    src="{{ color.image.url }}"
+                    alt="{{ color.name }}"
+                    data-color="{{ color.name }}"
+                    onclick="selectColor('{{ color.name }}', this)"
+                    style="cursor: pointer; border: 2px solid transparent;"
+                />
+                {% endfor %}
+            </div>
+            
+                <!-- unrendered size button for js to load -->
+                <template id="size-btn-template">
+                  {% include "components/size_button.html" %}
+                </template>
+
+            <div class="productSizesContainer" style="margin-top: 20px;">
+                <p id="selectSize">Select Size:</p>
+                <div class="productSizesRow" id="sizeContainer">
+                    <span style="color: #888;">Please select a color first</span>
+                </div>
+            </div>
+    
+            <button type="button" id="addToCartBtn" onclick="submitToCart()" disabled style="margin-top: 20px; opacity: 0.5;">
+                Add to Cart
+            </button>
+            <p id="error-msg" style="color: red; display: none;"></p>
+          </form>
+        
         <!-- COLOR VARIANTS -->
-        <div class="productVariantsContainer">
+        {% comment %} <div class="productVariantsContainer">
           {% for color in product.get_unique_colors %}
             <img 
               class="variantImage" 
@@ -71,7 +130,7 @@
           <div class="productSizesRow">
             
           </div>
-        </div>
+        </div> {% endcomment %}
       </div>
 
       <p>Bottom</p>

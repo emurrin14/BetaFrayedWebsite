@@ -10,35 +10,27 @@
     <a class="headerLinkText slideUnderlineGreen" href="#">Shirts</a>
     <a class="headerLinkText slideUnderlineGreen" href="#">Track Orders</a>
   </div>
+
   <!-- header left hamburger menu (max-width: 768px) -->
   <div class="headerHamburger">
     <img id="hamburgerOpen" src="{% static 'images/HamburgerMenu.svg' %}" alt="Menu" id="hamburgerOpenId" />
   </div>
+
   <!-- header right group -->
   <div class="headerRight">
-    <a href="{% url 'index' %}"> <!-- URL CART -->
+    <a href="{% url 'cart' %}">
       <img id="cartBtn" src="{% static 'images/cart.svg' %}" alt="Cart" />
     </a>
-    {% if not user.is_authenticated %}
-    <a href="{% url 'index' %}"> <!-- URL LOGIN -->
-      <img id="profileBtnIfCond" src="{% static 'images/profile.svg' %}" alt="Profile" />
-    </a>
-    {% else %}
-    <img id="profileBtn" src="{% static 'images/profile.svg' %}" alt="Profile" />
-    {% endif %}
   </div>
-  <div id="profileDropdown" class="profileDropdown">
-    {% if user.is_authenticated %}
-      <a href="{% url 'index' %}">Account</a>
-      <a href="{% url 'index' %}">Log Out</a>
-    {% else %}
-
+  <!-- MOBILE HEADER RIGHT CART ICON -->
+<a href="{% url 'cart' %}" class="cart-container">
+    <img src="{% static 'images/cart.svg' %}" alt="Cart" class="cart-icon">
+    {% if cart_item_count > 0 %}
+        <span class="cart-badge">{{ cart_item_count }}</span>
     {% endif %}
-    {% if user.is_authenticated and user.is_staff %}
-      <p>Admin</p>
-    {% endif %}
-  </div>
+</a>
 </header>
+
 <div id="hamburgerMenuOverlay" class="hamburgerMenuOverlay"></div>
 <div id="hamburgerMenuContainer" class="hamburgerMenuContainer">
   <div>

@@ -156,4 +156,4 @@ class CartItem(models.Model):
         return f"{self.subtotal() / 100:.2f}"
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.title} in Cart {self.cart.pk}"
+        return f"{self.quantity} x {self.product.name} in Cart {self.cart.pk}"
