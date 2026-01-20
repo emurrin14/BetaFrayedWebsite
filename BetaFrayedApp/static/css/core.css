@@ -139,7 +139,7 @@
   font-size: 1.2rem;
 }
 .headerRight {
-  display: flex;
+  display: inline-block;
   border: 1px solid red;
 }
 @media (max-width: 768px) {

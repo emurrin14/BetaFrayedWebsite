@@ -17,18 +17,19 @@
   </div>
 
   <!-- header right group -->
-  <div class="headerRight">
-    <a href="{% url 'cart' %}">
-      <img id="cartBtn" src="{% static 'images/cart.svg' %}" alt="Cart" />
-    </a>
-  </div>
-  <!-- MOBILE HEADER RIGHT CART ICON -->
-<a href="{% url 'cart' %}" class="cart-container">
+  <a href="{% url 'cart' %}" class="headerRight">
     <img src="{% static 'images/cart.svg' %}" alt="Cart" class="cart-icon">
     {% if cart_item_count > 0 %}
         <span class="cart-badge">{{ cart_item_count }}</span>
     {% endif %}
-</a>
+  </a>
+  <!-- MOBILE HEADER RIGHT CART ICON -->
+  <a href="{% url 'cart' %}" class="cart-container">
+    <img src="{% static 'images/cart.svg' %}" alt="Cart" class="cart-icon">
+    {% if cart_item_count > 0 %}
+        <span class="cart-badge">{{ cart_item_count }}</span>
+    {% endif %}
+  </a>
 </header>
 
 <div id="hamburgerMenuOverlay" class="hamburgerMenuOverlay"></div>
