@@ -140,7 +140,8 @@
 }
 .headerRight {
   display: inline-block;
-  border: 1px solid red;
+  position: relative;
+  text-decoration: none;
 }
 @media (max-width: 768px) {
   .headerRight{
