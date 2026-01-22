@@ -4,6 +4,7 @@ from django.utils.text import slugify
 from django.utils.timezone import now
 from django.utils import timezone
 from django.conf import settings
+from django.contrib.auth.models import User
 
 
 
@@ -157,3 +158,33 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name} in Cart {self.cart.pk}"
+
+
+
+# order model for records and saving order items
+class Order(models.Model):
+  user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+  full_name = models.CharField(max_length=100)
+  email = models.EmailField()
+  address = models.TextField()
+  city = models.CharField(max_length=100)
+  # stripe payment intent id for refunds later
+  stripe_payment_intent = models.CharField(max_length=200, blank=True, null=True)
+  amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
+  created_at = models.DateTimeField(auto_now_add=True)
+  paid = models.BooleanField(default=False)
+
+  def __str__(self):
+    return f"Order {seld.id}"
+
+
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    variant = models.ForeignKey(Product_Variant, on_delete=models.SET_NULL, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+      return f"{self.quantity} x {self.product.name}"
