@@ -132,6 +132,46 @@ def remove_from_cart(request, item_id):
     return redirect("cart")
 
 
+
+# view for ajax cart quantity updating
+def update_cart_item(request):
+    data = json.loads(request.body)
+    item_id = data['item_id']
+    action = data['action']
+    
+    cart_item = get_object_or_404(CartItem, id=item_id)
+    cart = cart_item.cart
+
+    if action == 'increment':
+        cart_item.quantity += 1
+        cart_item.save()
+    elif action == 'decrement':
+        cart_item.quantity -= 1
+        if cart_item.quantity <= 0:
+            cart_item.delete()
+        else:
+            cart_item.save()
+
+    # if item was deleted, return 0 quantity
+    quantity = cart_item.quantity if cart_item.pk else 0
+    
+    # Calculate new totals
+    # Note: You might need to adjust 'subtotal_display' to match your model's property name
+    item_subtotal = cart_item.subtotal_display if cart_item.pk else 0 
+    cart_total = cart.total_price_display 
+    total_items = cart.total_items
+
+    return JsonResponse({
+        'quantity': quantity,
+        'item_subtotal': item_subtotal,
+        'cart_total': cart_total,
+        'total_items': total_items,
+        'removed': quantity == 0
+    })
+
+
+
+
 # CUSTOM STRIPE CHECKOUT VIEW
 @csrf_exempt
 def create_checkout_session(request):

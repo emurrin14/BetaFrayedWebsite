@@ -67,21 +67,16 @@
         </div>
       </div>
 
-      <div class="ItemQuantity">
-        <form method="post" action="{% url 'subtract_from_cart' item.id %}" style="display: inline;">
-          {% csrf_token %}
-          <button type="submit" class="qty-btn">-</button>
-        </form>
-
-        <span class="qty-number">{{ item.quantity }}</span>
-
-        <form method="post" action="{% url 'increment_cart_item' item.id %}" style="display: inline;">
-          {% csrf_token %}
-          <button type="submit" class="qty-btn">+</button>
-        </form>
+      <div class="ItemQuantity" id="item-row-{{ item.id }}"> 
+        <button class="qty-btn update-cart-btn" data-item="{{ item.id }}" data-action="decrement">-</button>
+          <span class="qty-number" id="qty-{{ item.id }}">{{ item.quantity }}</span>
+        <button class="qty-btn update-cart-btn" data-item="{{ item.id }}" data-action="increment">+</button>
+        <div class="ItemTotal" id="subtotal-{{ item.id }}">
+          ${{ item.subtotal_display }}
+        </div>
       </div>
       
-      <div class="ItemTotal">
+      <div class="ItemTotal" id="subtotal-{{ item.id }}">
         ${{ item.subtotal_display }}
       </div>
       
