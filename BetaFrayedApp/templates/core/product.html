@@ -63,55 +63,62 @@
       <div class="details">
         <h1>{{ product.name }}</h1>
         <h1>{{ product.price_display }}</h1>
-          <script id="variant-data" type="application/json">
+
+        <div class="product-container" data-product-id="{{ product.id }}">
+
+          <div class="option-group">
+            <h4>Color:</h4>
+            <div class="options-wrapper" id="color-wrapper">
+              {% for color in product.get_unique_colors %}
+              <label class="variant-option" data-value="{{ color.name }}">
+                  <input type="radio" name="color" value="{{ color.name }}">
+                  <span>
+                    {% if size.code %}
+                        {{ size.code }}
+                    {% else %}
+                        {{ size.name }}
+                    {% endif %}
+                  </span>
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="option-group">
+            <h4>Size:</h4>
+            <div class="options-wrapper" id="size-wrapper">
+              {% for size in product.get_unique_sizes %}
+              <label class="variant-option" data-value="{{ size.name }}">
+                  <input type="radio" name="size" value="{{ size.name }}">
+                  <span>{{ size.name }}</span>
+              </label>
+              {% empty %}
+                 <p>One Size</p> {% endfor %}
+            </div>
+          </div>
+        
+          <div class="option-group">
+              <h4>Quantity:</h4>
+              <input type="number" id="quantity-input" value="1" min="1" style="width: 60px;">
+          </div>
+        
+          <button id="add-to-cart-btn" style="margin-top: 20px;">Add to Cart</button>
+          <div id="cart-message"></div>
+        
+        </div>
+        
+        <script id="variant-data" type="application/json">
             [
                 {% for variant in product.variants.all %}
                 {
                     "id": "{{ variant.id }}",
-                    "color": "{{ variant.color }}",
-                    "size": "{{ variant.size }}",
-                    "stock": {{ variant.stock_quantity|default:1 }} 
+                    "color": "{{ variant.color.name }}",
+                    "size": "{{ variant.size.name }}",
+                    "stock": {{ variant.stock }}
                 }{% if not forloop.last %},{% endif %}
                 {% endfor %}
             ]
-          </script>
-
-          <form id="addToCartForm" data-product-id="{{ product.id }}">
-            {% csrf_token %}
-            <input type="hidden" name="variant_id" id="selectedVariantId" value="">
-            <input type="hidden" name="quantity" value="1">
-
-            <p class="label">Select Color: <span id="colorLabel" style="font-weight:bold;"></span></p>
-            <div class="productVariantsContainer">
-                {% for color in product.get_unique_colors %}
-                <img 
-                    class="variantImage color-option" 
-                    src="{{ color.image.url }}"
-                    alt="{{ color.name }}"
-                    data-color="{{ color.name }}"
-                    onclick="selectColor('{{ color.name }}', this)"
-                    style="cursor: pointer; border: 2px solid transparent;"
-                />
-                {% endfor %}
-            </div>
-            
-                <!-- unrendered size button for js to load -->
-                <template id="size-btn-template">
-                  {% include "components/size_button.html" %}
-                </template>
-
-            <div class="productSizesContainer" style="margin-top: 20px;">
-                <p id="selectSize">Select Size:</p>
-                <div class="productSizesRow" id="sizeContainer">
-                    <span style="color: #888;">Please select a color first</span>
-                </div>
-            </div>
-    
-            <button type="button" id="addToCartBtn" onclick="submitToCart()" disabled style="margin-top: 20px; opacity: 0.5;">
-                Add to Cart
-            </button>
-            <p id="error-msg" style="color: red; display: none;"></p>
-          </form>
+        </script>
       </div>
 
       <p>Bottom</p>

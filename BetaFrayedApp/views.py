@@ -86,6 +86,13 @@ def add_to_cart(request, product_id):
     # Read quantity from the form
     quantity = int(request.POST.get("quantity", 1))
 
+    # security check for out of stock
+    if variant.stock < quantity:
+        return JsonResponse({
+            "success": False,
+            "error": "Sorry, this item is out of stock."
+        }, status=400)
+
     cart_item, created = CartItem.objects.get_or_create(
         cart=cart,
         product=product,

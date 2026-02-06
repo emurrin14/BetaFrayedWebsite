@@ -48,6 +48,11 @@ class Product(models.Model):
           image__isnull=False
       ).exclude(image="").distinct()
 
+  def get_unique_sizes(self):
+      return Size.objects.filter(
+          product_variant__product=self
+      ).distinct()
+
 
 
 class ProductImage(models.Model):
@@ -82,6 +87,7 @@ class Color(models.Model):
 
 class Size(models.Model):
   name = models.CharField(max_length=20)
+  code = models.CharField(max_length=5, blank=True, null=True)
   sort_order = models.PositiveIntegerField(default=0)
 
   class Meta:

@@ -18,148 +18,162 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-
-// add to cart logic
-// 1. Load the variant data we printed in the HTML
-const allVariants = JSON.parse(document.getElementById('variant-data').textContent);
+  document.addEventListener('DOMContentLoaded', function() {
     
-// State to track user selection
-let selectedColor = null;
-let selectedSize = null;
+    // --- PART 1: SETUP & VARIABLES ---
+    const addToCartBtn = document.getElementById('add-to-cart-btn');
+    const productContainer = document.querySelector('.product-container');
+    const variantDataScript = document.getElementById('variant-data');
 
-// --- FUNCTION: Handle Color Click ---
-function selectColor(colorName, imgElement) {
-    selectedColor = colorName;
-    selectedSize = null; // Reset size when color changes
+    // Safety check: If we aren't on a product page, stop running
+    if (!addToCartBtn || !variantDataScript) return;
+
+    // Parse the JSON data ONCE so we can use it everywhere
+    const variants = JSON.parse(variantDataScript.textContent);
+
+    const colorInputs = document.querySelectorAll('input[name="color"]');
+    const sizeWrapper = document.getElementById('size-wrapper');
+    const sizeOptions = sizeWrapper.querySelectorAll('.variant-option'); 
+    const messageDiv = document.getElementById('cart-message');
+
+
+    // --- PART 2: UI LOGIC (DEPENDENT OPTIONS) ---
     
-    // Update UI: Highlight selected image
-    document.querySelectorAll('.color-option').forEach(el => el.style.borderColor = 'transparent');
-    imgElement.style.borderColor = 'black'; // Or your theme color
-    document.getElementById('colorLabel').textContent = colorName
-   
-    // Filter variants that match this color
-    const availableSizes = allVariants
-        .filter(v => v.color === colorName)
-        .map(v => v.size); // Get just the size names
-    
-    // Render Size Buttons
-    renderSizeButtons(availableSizes);
-    updateAddToCartState();
-}
+        function updateSizeAvailability(selectedColor) {
+        // 1. Find all variants for this color
+        const colorVariants = variants.filter(v => v.color === selectedColor);
 
-// function to render size buttons
-const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL"]; // Custom sort order
+        // 2. Create a map of sizes to their stock status
+        // Example: { "S": 5, "M": 0, "L": 10 }
+        const sizeStockMap = {};
+        colorVariants.forEach(v => {
+            sizeStockMap[v.size] = v.stock;
+        });
 
-function renderSizeButtons(sizes) {
-    const container = document.getElementById('sizeContainer');
-    const template = document.getElementById('size-btn-template'); // Get the blueprint
-    
-    container.innerHTML = ''; 
+        // 3. Loop through all buttons and update state
+        sizeOptions.forEach(optionLabel => {
+            const sizeInput = optionLabel.querySelector('input');
+            const sizeName = sizeInput.value;
+            const stockCount = sizeStockMap[sizeName];
 
-    if (sizes.length === 0) {
-        container.innerHTML = '<span class="text-gray-500">Out of Stock</span>';
-        return;
+            // Reset classes
+            optionLabel.classList.remove('unavailable', 'out-of-stock');
+            sizeInput.disabled = false;
+
+            if (stockCount === undefined) {
+                // stock quantity doesnt exist
+                optionLabel.classList.add('unavailable');
+                sizeInput.disabled = true;
+                if (sizeInput.checked) sizeInput.checked = false;
+
+            } else if (stockCount === 0) {
+                // stock is 0
+                optionLabel.classList.add('out-of-stock');
+                sizeInput.disabled = true;
+                if (sizeInput.checked) sizeInput.checked = false;
+
+            } 
+            
+        });
     }
 
-    // Optional: Sort the sizes based on the array above
-    sizes.sort((a, b) => {
-        return sizeOrder.indexOf(a) - sizeOrder.indexOf(b);
+    // Listen for Color changes
+    colorInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            updateSizeAvailability(this.value);
+            
+            // Clear any old error messages when user switches color
+            messageDiv.innerText = "";
+        });
     });
 
-    sizes.forEach(size => {
-        // 1. CLONE the template (true = deep clone)
-        const clone = template.content.cloneNode(true);
-        
-        // 2. FIND the button inside the clone
-        const btn = clone.querySelector('button');
-        
-        // 3. FILL in data
-        // If your component has a span with class 'size-text', fill that
-        const textSpan = btn.querySelector('.size-text');
-        if (textSpan) textSpan.innerText = size;
-        else btn.innerText = size; // Fallback if no span
-        
-        // 4. ATTACH Logic
-        btn.onclick = () => {
-            // Remove 'active' class from all other buttons
-            // (Assumes you have a .active CSS class defined)
-            container.querySelectorAll('.size-btn').forEach(b => {
-                b.classList.remove('active-size-btn');
-                b.style.backgroundColor = ''; 
-                b.style.color = '';
-            });
-            
-            // Add 'active' class to clicked button
-            btn.classList.add('active-size-btn');
-            
-            // Your existing logic
-            selectedSize = size;
-            updateAddToCartState();
-        };
+    // Run once on load (in case browser remembered a selection on refresh)
+    const preSelectedColor = document.querySelector('input[name="color"]:checked');
+    if (preSelectedColor) {
+        updateSizeAvailability(preSelectedColor.value);
+    }
 
-        // 5. INJECT into DOM
-        container.appendChild(clone);
+
+    // --- PART 3: ADD TO CART LOGIC ---
+
+    addToCartBtn.addEventListener('click', function() {
+        const productId = productContainer.dataset.productId;
+        
+        // Get Selected Values
+        const sizeInput = document.querySelector('input[name="size"]:checked');
+        const colorInput = document.querySelector('input[name="color"]:checked');
+        const quantity = document.getElementById('quantity-input').value;
+
+        // Reset message
+        messageDiv.innerText = "";
+        messageDiv.style.color = "black";
+
+        // Validate Selection
+        if (!colorInput) {
+            messageDiv.innerText = "Please select a color.";
+            messageDiv.style.color = "red";
+            return;
+        }
+        if (!sizeInput) {
+            messageDiv.innerText = "Please select a size.";
+            messageDiv.style.color = "red";
+            return;
+        }
+
+        const size = sizeInput.value;
+        const color = colorInput.value;
+
+        // Find Matching Variant ID
+        const selectedVariant = variants.find(v => v.size === size && v.color === color);
+
+        if (!selectedVariant) {
+            messageDiv.innerText = "This combination is currently unavailable.";
+            messageDiv.style.color = "red";
+            return;
+        }
+
+        // Send to Django
+        const formData = new FormData();
+        formData.append('variant_id', selectedVariant.id);
+        formData.append('quantity', quantity);
+
+        fetch(`/add-to-cart/${productId}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                messageDiv.innerText = "Added to Cart!";
+                messageDiv.style.color = "green";
+            } else {
+                messageDiv.innerText = "Error adding to cart.";
+                messageDiv.style.color = "red";
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            messageDiv.innerText = "Server Error.";
+            messageDiv.style.color = "red";
+        });
     });
-}
-
-// function to find id and enable button
-function updateAddToCartState() {
-    const btn = document.getElementById('addToCartBtn');
-    const hiddenInput = document.getElementById('selectedVariantId');
-
-    if (selectedColor && selectedSize) {
-        // find the exact variant id
-        const variant = allVariants.find(v => v.color === selectedColor && v.size === selectedSize);
-            
-        if (variant) {
-            hiddenInput.value = variant.id;
-            btn.disabled = false;
-            btn.style.opacity = '1';
-            btn.innerText = "Add to Cart - " + selectedSize;
-        }
-    } else {
-        btn.disabled = true;
-        btn.style.opacity = '0.5';
-    }
-}
-
-// function to send to view
-function submitToCart() {
-    const form = document.getElementById('addToCartForm');
-    
-    // get the id from the html data attribute
-    const productId = form.getAttribute('data-product-id'); 
-
-    const formData = new FormData(form);
-
-
-//fetch url and send json data
-    fetch(`/add-to-cart/${productId}/`, { 
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
-        }
-    })
-    .then(response => {
-        if (!response.ok) throw new Error("Network response was not ok");
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert("Added to cart! Total items: " + data.quantity);
-        } else {
-            alert("Error adding to cart.");
-        }
-    })
-    .catch(err => console.error('Error:', err));
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const firstColorImg = document.querySelector(".color-option");
-
-    if (firstColorImg) {
-        const colorName = firstColorImg.getAttribute("data-color");
-        selectColor(colorName, firstColorImg);
-    }
 });
+
+// Helper for CSRF Token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

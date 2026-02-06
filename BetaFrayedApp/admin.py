@@ -32,9 +32,9 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Size)
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'sort_order')
+    list_display = ('name', 'code','sort_order')
     list_editable = ('sort_order',)
-    search_fields = ('name',)
+    search_fields = ('name', 'code')
 
 @admin.register(Color)
 class ColorAdmin(admin.ModelAdmin):
