@@ -38,6 +38,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // --- PART 2: UI LOGIC (DEPENDENT OPTIONS) ---
+        function toggleButtonState() {
+            const colorSelected = document.querySelector('input[name="color"]:checked');
+            const sizeSelected = document.querySelector('input[name="size"]:checked');
+        
+            if (colorSelected && sizeSelected) {
+                addToCartBtn.classList.add('active-add-to-cart-btn');
+                messageDiv.innerText = "";
+            } else {
+                addToCartBtn.classList.remove('active-add-to-cart-btn');
+            }
+        }
+        
+
     
         function updateSizeAvailability(selectedColor) {
         // 1. Find all variants for this color
@@ -57,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const stockCount = sizeStockMap[sizeName];
 
             // Reset classes
+            sizeInput.checked = false;
             optionLabel.classList.remove('unavailable', 'out-of-stock');
             sizeInput.disabled = false;
 
@@ -75,15 +89,23 @@ document.addEventListener("DOMContentLoaded", () => {
             } 
             
         });
+        // after unchecking everything, update button state
+        toggleButtonState();
     }
 
     // Listen for Color changes
     colorInputs.forEach(input => {
         input.addEventListener('change', function() {
             updateSizeAvailability(this.value);
-            
-            // Clear any old error messages when user switches color
             messageDiv.innerText = "";
+        });
+    });
+
+    // Listen for size changes
+    const sizeInputs = document.querySelectorAll('input[name="size"]');
+    sizeInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            toggleButtonState();
         });
     });
 
@@ -109,6 +131,11 @@ document.addEventListener("DOMContentLoaded", () => {
         messageDiv.style.color = "black";
 
         // Validate Selection
+        if (!this.classList.contains('active-add-to-cart-btn')) {
+            messageDiv.innerText = "Please select a size and color.";
+            messageDiv.style.color = "red";
+            return;
+        }
         if (!colorInput) {
             messageDiv.innerText = "Please select a color.";
             messageDiv.style.color = "red";
@@ -119,7 +146,9 @@ document.addEventListener("DOMContentLoaded", () => {
             messageDiv.style.color = "red";
             return;
         }
-
+        
+        
+        const qty = parseInt(quantity);
         const size = sizeInput.value;
         const color = colorInput.value;
 
@@ -128,6 +157,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!selectedVariant) {
             messageDiv.innerText = "This combination is currently unavailable.";
+            messageDiv.style.color = "red";
+            return;
+        }
+        // Quantity Checks
+        if (isNaN(qty) || qty <= 0) {
+            messageDiv.innerText = "Please enter a valid quantity.";
+            messageDiv.style.color = "red";
+            return;
+        }
+        if (qty > selectedVariant.stock) {
+            messageDiv.innerText = 'Quantity is more than item stock.';
             messageDiv.style.color = "red";
             return;
         }

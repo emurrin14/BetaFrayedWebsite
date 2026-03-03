@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <link rel="stylesheet" href="{% static 'css/drop_page.css' %}" />
+</head>
+<body>
+<main>
+    <img src="{% static 'images/logo.png' %}" />
+
+    <div class="main-form">
+        <form method="post">
+            {% csrf_token %}
+            <input class="" type="password" name="password" placeholder="Enter password to preview">
+            
+            <div class="main-form-button">
+                <button type="submit">Enter</button>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>

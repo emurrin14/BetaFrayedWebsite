@@ -72,6 +72,24 @@
               {% for color in product.get_unique_colors %}
               <label class="variant-option" data-value="{{ color.name }}">
                   <input type="radio" name="color" value="{{ color.name }}">
+                  <span class="color-swatch-container">
+                    {% if color.image %}
+                      <img src="{{ color.image.url }}" alt="{{ color.name }}" class="color-swatch-image">
+                    {% else %}
+                      {{ color.name }}
+                    {% endif %}
+                  </span>
+              </label>
+              {% endfor %}
+            </div>
+          </div> 
+
+          <div class="option-group">
+            <h4>Size:</h4>
+            <div class="options-wrapper" id="size-wrapper">
+              {% for size in product.get_unique_sizes %}
+              <label class="variant-option variant-option-size" data-value="{{ size.name }}">
+                  <input type="radio" name="size" value="{{ size.name }}">
                   <span>
                     {% if size.code %}
                         {{ size.code }}
@@ -80,30 +98,21 @@
                     {% endif %}
                   </span>
               </label>
-              {% endfor %}
-            </div>
-          </div>
-
-          <div class="option-group">
-            <h4>Size:</h4>
-            <div class="options-wrapper" id="size-wrapper">
-              {% for size in product.get_unique_sizes %}
-              <label class="variant-option" data-value="{{ size.name }}">
-                  <input type="radio" name="size" value="{{ size.name }}">
-                  <span>{{ size.name }}</span>
-              </label>
               {% empty %}
                  <p>One Size</p> {% endfor %}
             </div>
           </div>
-        
-          <div class="option-group">
-              <h4>Quantity:</h4>
-              <input type="number" id="quantity-input" value="1" min="1" style="width: 60px;">
+
+          <div class="add-to-cart-container">
+            <div class="add-to-cart-button-div-wrapper">
+              <div class="option-group">
+                  <input type="number" id="quantity-input" value="1" min="1" style="width: 60px;">
+              </div>
+              <button id="add-to-cart-btn" style="margin-top: 20px;">Add to Cart</button>
+            </div>
+
+            <div id="cart-message"></div>
           </div>
-        
-          <button id="add-to-cart-btn" style="margin-top: 20px;">Add to Cart</button>
-          <div id="cart-message"></div>
         
         </div>
         

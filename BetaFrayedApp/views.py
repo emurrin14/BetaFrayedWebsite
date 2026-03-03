@@ -341,3 +341,12 @@ def cancel_view(request):
 
 def coming_soon_view(request):
     return render(request, 'comingsoon.html') 
+
+
+def drop_page_view(request):
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        if password == settings.DROP_PAGE_PASSWORD:
+            request.session['is_preview_authorized'] = True
+            return redirect('/')
+    return render(request, 'drop_page.html')

@@ -1,0 +1,121 @@
+:root{
+  --main: #ffffff;
+  --bg: #2a2a2a;
+  --accent: #005c48;
+  --accenthover: #013328;
+  --border2px: solid #ccc 2px;
+  --border1px: solid #ccc 1px; 
+  --accenthoveropposite: #2f181b;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+  /* SLIDE IN UNDERLINE */
+.slideUnderline {
+  color: white;
+  text-decoration: none;
+  background-image: linear-gradient(white, white);
+  background-size: 0% 0.1em;
+  background-position-y: 100%;
+  background-position-x: 0%;
+  background-repeat: no-repeat;
+  transition: background-size 0.2s ease-in-out;
+}
+.slideUnderline:hover,
+.slideUnderline:focus,
+.slideUnderline:active {
+  background-size: 100% 0.1em;
+}
+    
+/* SLIDE IN YUNDERLINE GREEN VERSION */
+.slideUnderlineGreen {
+  color: var(--accenthover);
+  text-decoration: none;
+  background-image: linear-gradient(var(--accenthover), var(--accenthover));
+  background-size: 0% 0.1em;
+  background-position-y: 100%;
+  background-position-x: 0%;
+  background-repeat: no-repeat;
+  transition: background-size 0.2s ease-in-out;
+}
+.slideUnderlineGreen:hover,
+.slideUnderlineGreen:focus,
+.slideUnderlineGreen:active {
+  background-size: 100% 0.1em;
+}
+/* styling for form */
+input:focus, 
+textarea:focus, 
+select:focus, 
+button:focus {
+    outline: none !important;
+    border-color: inherit;
+    box-shadow: none !important;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+img {
+  margin-top: 1.5rem;
+  height: 45px;
+}
+.main-form {
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+form {
+  width: 100%;
+  height: 9.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+.main-form input {
+  height: 3rem;
+  padding: 0 0 0 1rem;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  font-size: 1.2rem;
+}
+.main-form input:focus,
+.main-form input:active {
+  border-bottom: 2px solid var(--bg);
+}
+
+.main-form-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.main-form button {
+  width: 33%;
+  padding: 1rem 1.4rem;
+  border: none;
+  color: white;
+  background-color: var(--accenthover);
+  cursor: pointer;
+  font-size: 1.1rem;
+}

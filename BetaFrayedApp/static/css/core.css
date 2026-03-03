@@ -1,25 +1,24 @@
 :root{
-    --main: #ffffff;
-    --accent: #005c48;
-    --accenthover: #013328;
-    --border2px: solid #ccc 2px;
-    --border1px: solid #ccc 1px; 
-    --accenthoveropposite: #2f181b;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-  }
-  body {
-    box-sizing: border-box;
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  /* GLOBAL EFFECTS */
-  
+  --main: #ffffff;
+  --accent: #005c48;
+  --accenthover: #013328;
+  --border2px: solid #ccc 2px;
+  --border1px: solid #ccc 1px; 
+  --accenthoveropposite: #2f181b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+body {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
   /* SLIDE IN UNDERLINE */
   .slideUnderline {
   color: white;
@@ -54,60 +53,60 @@
   background-size: 100% 0.1em;
   }
   
-  /* TOPBAR STYLES */
-  .topbarContainer {
+/* TOPBAR STYLES */
+.topbarContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 4;
+  height: 40px;
+  background-color: var(--accenthover);
+  top: 0;
+  padding: 0 1.5rem 0 1.5rem;
+  border-bottom: 0.1rem solid #ccc;
+  width: 100%;
+  color: white;
+  box-sizing: border-box;
+}
+.topbarContainer p {
+  font-size: 1.2rem;
+}
+.topbarContainer .countdownContainer {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.topbarContainer #saleTimer {
+  color: red;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+.topbarContainer #socialsContainer {
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+}
+#socialsContainer a {
+  color: white;
+  text-decoration: none;
+}
+@media (max-width: 768px) {
+  #socialsContainer {
+    display: none;
+  }
+  .topbar2 {
+    display: none;
+  }
+  .countdownContainer {
+    position: static;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    z-index: 4;
-    height: 40px;
-    background-color: var(--accenthover);
-    top: 0;
-    padding: 0 1.5rem 0 1.5rem;
-    border-bottom: 0.1rem solid #ccc;
     width: 100%;
-    color: white;
-    box-sizing: border-box;
   }
-  .topbarContainer p {
-    font-size: 1.2rem;
-  }
-  .topbarContainer .countdownContainer {
-    display: flex;
-    flex-direction: row;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .topbarContainer #saleTimer {
-    color: red;
-    font-size: 1.2rem;
-    margin-left: 0.5rem;
-  }
-  .topbarContainer #socialsContainer {
-    transition: opacity 1s ease-in-out;
-    opacity: 1;
-  }
-  #socialsContainer a {
-    color: white;
-    text-decoration: none;
-  }
-  @media (max-width: 768px) {
-    #socialsContainer {
-      display: none;
-    }
-    .topbar2 {
-      display: none;
-    }
-    .countdownContainer {
-      position: static;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
-  }
+}
 /* HEADER STYLE */
 .headerContainer {
   display: flex;
