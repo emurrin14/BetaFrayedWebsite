@@ -69,53 +69,138 @@ main {
   flex-direction: column;
   align-items: center;
 }
-img {
-  margin-top: 1.5rem;
+
+/* HEADER */
+.drop-header {
+  width: 95%;
   height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem; 
+  position: relative;
 }
-.main-form {
+#logo-img {
+  margin-top: 0;
+  height: 45px;
+  position: absolute;
+  left: 0;
+}
+#lock-img {
+  height: 22.5px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+/* PASSWORD FORM CONTAINER */
+.password-form-container{
+  position: absolute;
+  right: 52.5px;
+  top: 50%;
+  transform: translateY(-50%) translateX(20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease-in-out;
+}
+.password-form-container.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+#password-form {
+  display: flex;
+  flex-direction: row;
+}
+#password-form input {
+  margin-right: .5rem;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+}
+#password-form button {
+  padding: .4rem .6rem;
+  border: none;
+  color: white;
+  background-color: var(--accenthover);
+  cursor: pointer;
+  font-size: .8rem;
+}
+
+/* EMAIL FORM CONTAINER */
+.main-form-container {
   width: 90%;
-  max-width: 400px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-form {
+.main-form-container form {
   width: 100%;
-  height: 9.5rem;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+  gap: 1rem;
 }
-.main-form input {
+
+.main-form-container input {
   height: 3rem;
   padding: 0 0 0 1rem;
-  border: none;
-  border-bottom: 2px solid #ccc;
+  border: 2px solid var(--bg);
   font-size: 1.2rem;
 }
-.main-form input:focus,
-.main-form input:active {
+.main-form-container input:focus,
+.main-form-container input:active {
   border-bottom: 2px solid var(--bg);
 }
 
-.main-form-button {
+.main-form-button-container {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.main-form button {
-  width: 33%;
+.main-form-button-container button {
+  width: 100%;
   padding: 1rem 1.4rem;
   border: none;
   color: white;
   background-color: var(--accenthover);
   cursor: pointer;
   font-size: 1.1rem;
+} 
+
+@media (max-width: 768px) {
+  .drop-header {
+    height: 100px;
+  }
+  #logo-img {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+  }
+  #lock-img {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+  }
+  .password-form-container {
+    left: 50%;
+    transform: translate(-50%, 65px);
+  }
+  .password-form-container.active {
+    left: 50%;
+    transform: translate(-50%, 45px);
+  }
 }

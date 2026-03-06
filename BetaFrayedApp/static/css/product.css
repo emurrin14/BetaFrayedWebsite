@@ -26,7 +26,9 @@ body {
 .gridContainer{
   display: flex;
   flex-direction: row;
-  box-sizing: border-box;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
 }
 
 /* IMAGE GRID */
@@ -105,20 +107,20 @@ body {
 
 
 .detailsContainer{
-  flex: 6 1 0;
-  min-width: 0;
+  flex: 0 0 40%;
+  min-width: 300px;
   width: 100%;
   background-color: white;
   border: 1px solid red; /* FOR DEBUG ONLY */
-  height: auto;
-  transform: translateY(1rem);
+  height: fit-content;
   position: sticky;
-  top: calc(80px - 1rem);
-  padding: 2rem 2rem;
+  top: 1.5rem;
+  padding: 2rem;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 1.5rem;
 }
 .detailsContainer p, h1{
   margin: 0;
@@ -258,23 +260,31 @@ body {
   align-items: center;
   justify-content: center;
   border: solid red 2px;
+  margin-bottom: 10px;
 }
 .add-to-cart-button-div-wrapper{
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
+  gap: 10px;
 }
 #quantity-input {
-  
+  height: 50px; 
+  box-sizing: border-box;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
-
 #add-to-cart-btn{
   background-color: var(--accent);
   color: white;
   border: none;
-  padding: 1rem 8rem;
+  height: 50px;
+  padding: 0 8rem;
   pointer-events: none;
-  border-radius: .5rem;
   opacity: .5;
+  font-weight: 600;
+  white-space: nowrap;
 }
 #add-to-cart-btn.active-add-to-cart-btn{
   opacity: 1;
@@ -282,7 +292,51 @@ body {
   cursor: pointer;
 }
 
-
+/* accordian menus */
+.accordians-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.accordian-item:last-of-type {
+  border-bottom: 1px solid #ccc;
+}
+.accordian {
+  border-top: 1px solid #ccc;
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.accordians-container p {
+  font-size: 1rem;
+}
+.accordians-container img {
+  height: 1rem;
+  width: 1rem;
+  color: black;
+}
+.arrow {
+  transition: transform 0.3s ease;
+}
+.accordian-item.active .arrow {
+  transform: rotate(180deg);
+}
+.accordian-content {
+  max-height: 0;
+  overflow: hidden;
+}
+.accordian-item.active .accordian-content {
+  max-height: 500px;
+}
+.content-inner {
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: black;
+}
 
 @media (max-width: 800px) {
   .gridContainer {

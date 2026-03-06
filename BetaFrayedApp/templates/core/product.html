@@ -103,18 +103,44 @@
             </div>
           </div>
 
+          <!-- ADD TO CART -->
           <div class="add-to-cart-container">
             <div class="add-to-cart-button-div-wrapper">
               <div class="option-group">
                   <input type="number" id="quantity-input" value="1" min="1" style="width: 60px;">
               </div>
-              <button id="add-to-cart-btn" style="margin-top: 20px;">Add to Cart</button>
+              <button id="add-to-cart-btn">Add to Cart</button>
             </div>
 
             <div id="cart-message"></div>
           </div>
-        
-        </div>
+
+          <!-- ACCORDIANS -->
+          <div class="accordians-container">
+            <div class="accordian-item">
+              <div class="accordian">
+                <p>Size Guide</p>
+                <img src="{% static 'images/downArrow.svg' %}" class="arrow" alt="Accordian Menu">
+              </div>
+              <div class="accordian-content">
+                <div class="content-inner">
+                  <p>Your size guide table or text goes here.</p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="accordian-item">
+              <div class="accordian">
+                <p>Description</p>
+                <img src="{% static 'images/downArrow.svg' %}" class="arrow" alt="Accordian Menu">
+              </div>
+              <div class="accordian-content">
+                <div class="content-inner">
+                  <p>{{ product.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         
         <script id="variant-data" type="application/json">
             [

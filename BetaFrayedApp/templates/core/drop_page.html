@@ -9,18 +9,38 @@
 </head>
 <body>
 <main>
-    <img src="{% static 'images/logo.png' %}" />
+    <div class="drop-header">
+        <img id="logo-img" src="{% static 'images/logo.png' %}" />
+        <a class="lock-img-link">
+            <img id="lock-img" src="{% static 'images/lock.svg' %}" />
+        </a>
 
-    <div class="main-form">
-        <form method="post">
+        <!-- PASSWORD INPUT -->
+        <div class="password-form-container" id="password-form-container">
+            <form id="password-form" method="post">
+                {% csrf_token %}
+                <input class="password-input" type="password" name="password" placeholder="Enter password to preview">
+                <div class="password-button-container">
+                    <button class="password-button" type="submit">Enter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN EMAIL FORM -->
+    <div class="main-form-container">
+        <p>Get notified when we drop!</p>
+        <form method="post" id="email-form">
             {% csrf_token %}
-            <input class="" type="password" name="password" placeholder="Enter password to preview">
-            
-            <div class="main-form-button">
-                <button type="submit">Enter</button>
+            <input class="main-input" type="email" name="email" placeholder="Enter Email">
+            <div class="main-form-button-container">
+                <button id="email-submit-button" class="main-form-button" type="submit">Sign Up</button>
             </div>
+            <p id="form-response"></p>
         </form>
     </div>
+    
 </main>
+<script src="{% static 'js/drop_page.js' %}"></script>
 </body>
 </html>

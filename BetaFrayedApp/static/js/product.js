@@ -1,4 +1,4 @@
-// clickable image thumbnails
+// clickable image thumbnails FOR MOBILE
 document.addEventListener("DOMContentLoaded", () => {
     const mainImg = document.getElementById("heroImage");
     const thumbnails = document.querySelectorAll(".thumbnail");
@@ -16,6 +16,17 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
+
+document.querySelectorAll('.accordian').forEach(button => {
+  button.addEventListener('click', () => {
+    const accordionItem = button.parentElement;
+    
+    document.querySelectorAll('.accordian-item').forEach(item => {
+      if (item !== accordionItem) item.classList.remove('active');
+    });
+    accordionItem.classList.toggle('active');
+  });
+});
 
 
   document.addEventListener('DOMContentLoaded', function() {
