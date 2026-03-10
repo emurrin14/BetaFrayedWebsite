@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const hamburgerClose = document.getElementById("hamburgerClose");
     const menu = document.getElementById("hamburgerMenuContainer");
     const overlay = document.getElementById("hamburgerMenuOverlay");
+    // TOPBAR ANIMATIONS
+    const topbar = document.getElementById("");
   
     if (!hamburgerOpen || !menu || !overlay) return;
   

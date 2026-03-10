@@ -49,7 +49,7 @@ input:focus,
 textarea:focus, 
 select:focus, 
 button:focus {
-    outline: none !important;
+    outline: 1px black solid;
     border-color: inherit;
     box-shadow: none !important;
 }
@@ -64,7 +64,7 @@ body {
 
 main {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -162,6 +162,16 @@ main {
 .main-form-container input:focus,
 .main-form-container input:active {
   border-bottom: 2px solid var(--bg);
+}
+.main-form-container.hidden {
+  display: none;
+}
+.main-form-container-subscribed {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  display: none;
 }
 
 .main-form-button-container {

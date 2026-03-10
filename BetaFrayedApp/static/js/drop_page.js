@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 2. ASYNC EMAIL SUBMISSION ---
+    const emailFormText = document.getElementById('form-text');
     const emailForm = document.getElementById('email-form');
     const responseDiv = document.getElementById('form-response');
     const submitBtn = document.getElementById('email-submit-button');
+    const ThanksText = document.querySelector('.main-form-container-subscribed');
 
     if (emailForm) {
         emailForm.addEventListener('submit', async function(e) {
@@ -43,6 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok) {
                     responseDiv.textContent = "Thanks For Subscribing!";
                     responseDiv.style.color = "black";
+                    // Hide form and Show Thanks Text
+                    emailFormText.style.display = 'none';
+                    emailForm.style.display = 'none';
+                    ThanksText.style.display = 'flex';
                     emailForm.reset(); 
                 } else {
                     responseDiv.textContent = data.message || "Error occurred.";

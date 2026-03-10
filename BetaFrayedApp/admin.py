@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Product, ProductImage, Color, Product_Variant, Size
+from .models import Product, ProductImage, Color, Product_Variant, Size, Subscriber
 from django.utils.html import format_html
 
 # Register your models here.
@@ -52,3 +52,8 @@ class ProductVariantAdmin(admin.ModelAdmin):
 class ProductImageAdmin(admin.ModelAdmin):
     list_display = ('product', 'order', 'image')
     list_filter = ('product',)
+
+@admin.register(Subscriber)
+class Subscriber(admin.ModelAdmin):
+    list_display = ('email', 'date_joined')
+    list_filter = ('email', 'date_joined')

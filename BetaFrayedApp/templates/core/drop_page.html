@@ -10,7 +10,7 @@
 <body>
 <main>
     <div class="drop-header">
-        <img id="logo-img" src="{% static 'images/logo.png' %}" />
+        <img id="logo-img" src="{% static 'images/new-frayed-logo-transparent.png' %}" />
         <a class="lock-img-link">
             <img id="lock-img" src="{% static 'images/lock.svg' %}" />
         </a>
@@ -29,7 +29,7 @@
 
     <!-- MAIN EMAIL FORM -->
     <div class="main-form-container">
-        <p>Get notified when we drop!</p>
+        <p id="form-text">Get notified when we drop!</p>
         <form method="post" id="email-form">
             {% csrf_token %}
             <input class="main-input" type="email" name="email" placeholder="Enter Email">
@@ -38,6 +38,9 @@
             </div>
             <p id="form-response"></p>
         </form>
+    </div>
+    <div class="main-form-container-subscribed">
+        <p>Thank you for subscribing!</p>
     </div>
     
 </main>
