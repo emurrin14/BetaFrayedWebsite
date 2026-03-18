@@ -10,6 +10,8 @@
     pkgs.python311
     pkgs.python311Packages.pip
     pkgs.openssh
+    pkgs.sudo
+    pkgs.redis
     # pkgs.nodejs_20
     # pkgs.nodePackages.nodemon
   ];

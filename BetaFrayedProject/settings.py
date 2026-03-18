@@ -20,6 +20,7 @@ STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET")
 DROP_PAGE_PASSWORD = os.getenv("DROP_PAGE_PASSWORD")
+MAILERSEND_API_KEY = os.getenv("MAILERSEND_API_KEY")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'BetaFrayedApp',
     'taggit',
+    'newsletter',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +142,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "BetaFrayedApp" / 'static']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'

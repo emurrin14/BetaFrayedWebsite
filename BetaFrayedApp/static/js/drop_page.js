@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Visual feedback
             submitBtn.innerText = 'Signing up...';
             submitBtn.disabled = true;
+            responseDiv.style.display = 'none'; // hide previous messages on new submit
 
             const formData = new FormData(this);
 
@@ -43,22 +44,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    responseDiv.textContent = "Thanks For Subscribing!";
-                    responseDiv.style.color = "black";
-                    // Hide form and Show Thanks Text
-                    emailFormText.style.display = 'none';
-                    emailForm.style.display = 'none';
-                    ThanksText.style.display = 'flex';
-                    emailForm.reset(); 
+                    if (data.status === 'success') {
+                        // Hide form and Show Thanks Text
+                        emailFormText.style.display = 'none';
+                        emailForm.style.display = 'none';
+                        ThanksText.style.display = 'flex';
+                        emailForm.reset(); 
+                    } else if (data.status === 'exists') {
+                        // Keep form visible, show 'already subscribed' message
+                        responseDiv.textContent = data.message;
+                        responseDiv.style.color = "orange"; // You can change this to any color
+                        responseDiv.style.display = 'block';
+                    }
                 } else {
                     responseDiv.textContent = data.message || "Error occurred.";
                     responseDiv.style.color = "red";
+                    responseDiv.style.display = 'block';
                 }
             } catch (error) {
                 responseDiv.textContent = "Connection error.";
                 responseDiv.style.color = "red";
-            } finally {
                 responseDiv.style.display = 'block';
+            } finally {
                 submitBtn.innerText = 'Sign Up';
                 submitBtn.disabled = false;
             }

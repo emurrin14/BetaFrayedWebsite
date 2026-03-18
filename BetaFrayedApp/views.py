@@ -4,7 +4,8 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadReque
 from django.views.decorators.csrf import csrf_exempt
 import stripe
 from django.utils.timezone import localtime
-from .models import Product, Product_Variant, Cart, CartItem, Order, OrderItem, Subscriber
+from .models import Product, Product_Variant, Cart, CartItem, Order, OrderItem
+from newsletter.models import Subscriber
 import json
 from django.views.decorators.http import require_POST
 from django.urls import reverse
@@ -343,20 +344,26 @@ def coming_soon_view(request):
     return render(request, 'comingsoon.html') 
 
 
+
+
 def drop_page_view(request):
     if request.method == 'POST':
         # Check if its an ajax email sub
         if 'email' in request.POST:
             email = request.POST.get('email')
             if email:
-                #save email to the database
-                Subscriber.objects.get_or_create(email=email)
+                # get_or_create returns a tuple: (object, created_boolean)
+                subscriber, created = Subscriber.objects.get_or_create(email=email)
 
-                #return json for the js fetch to "catch"
-                return JsonResponse({'status': 'success', 'message': 'Subscribed!'}, status=200)
+                if created:
+                    return JsonResponse({'status': 'success', 'message': 'Subscribed!'}, status=200)
+                else:
+                    # Return an 'exists' status. We keep status=200 so fetch doesn't throw a network error.
+                    return JsonResponse({'status': 'exists', 'message': 'Email already subscribed.'}, status=200)
+                    
             return JsonResponse({'status': 'error', 'message': 'Invalid email.'}, status=400)
 
-        # handle password sub
+        # handle password
         password = request.POST.get('password')
         if password == settings.DROP_PAGE_PASSWORD:
             request.session['is_preview_authorized'] = True
